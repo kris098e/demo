@@ -1,4 +1,4 @@
-package com.example
+package project
 
 import io.micronaut.runtime.Micronaut.run
 import io.swagger.v3.oas.annotations.*

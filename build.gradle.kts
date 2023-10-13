@@ -1,3 +1,10 @@
+buildscript {
+    dependencies {
+        classpath("org.jooq:jooq:3.18.4")
+    }
+}
+
+
 plugins {
     id("org.jetbrains.kotlin.jvm") version "1.8.22"
     id("org.jetbrains.kotlin.kapt") version "1.8.22"
@@ -5,6 +12,7 @@ plugins {
     id("com.github.johnrengelman.shadow") version "8.1.1"
     id("io.micronaut.application") version "4.0.4"
     id("io.micronaut.aot") version "4.0.4"
+    id("nu.studer.jooq") version "8.2"
 }
 
 version = "0.1"
@@ -26,7 +34,6 @@ dependencies {
     implementation("io.micronaut.liquibase:micronaut-liquibase")
     implementation("io.micronaut.serde:micronaut-serde-jackson")
     implementation("io.micronaut.sql:micronaut-jdbc-hikari")
-    implementation("io.micronaut.sql:micronaut-jooq")
     implementation("io.micronaut.validation:micronaut-validation")
     implementation("io.swagger.core.v3:swagger-annotations")
     implementation("jakarta.annotation:jakarta.annotation-api")
@@ -43,11 +50,13 @@ dependencies {
     testImplementation("org.testcontainers:junit-jupiter")
     testImplementation("org.testcontainers:postgresql")
     testImplementation("org.testcontainers:testcontainers")
+    jooqGenerator("org.postgresql:postgresql:42.5.1")
+    implementation("io.micronaut.sql:micronaut-jooq")
 }
 
 
 application {
-    mainClass.set("com.example.ApplicationKt")
+    mainClass.set("project.ApplicationKt")
 }
 java {
     sourceCompatibility = JavaVersion.toVersion("17")
@@ -86,5 +95,43 @@ micronaut {
     }
 }
 
+//https://github.com/etiennestuder/gradle-jooq-plugin
+jooq {
+    version.set("3.18.4")  // default (can be omitted)
+    edition.set(nu.studer.gradle.jooq.JooqEdition.OSS)  // default (can be omitted)
 
+    configurations {
+        create("main") {  // name of the jOOQ configuration
+            generateSchemaSourceOnCompilation.set(true)  // default (can be omitted)
 
+            jooqConfiguration.apply {
+                jdbc.apply {
+                    driver = "org.postgresql.Driver"
+                    url = "jdbc:postgresql://localhost:5432/software"
+                    user = "postgres"
+                    password = "postgres"
+                }
+                generator.apply {
+                    name = "org.jooq.codegen.DefaultGenerator"
+                    database.apply {
+                        name = "org.jooq.meta.postgres.PostgresDatabase"
+                        inputSchema = "public"
+                    }
+                    generate.apply {
+                        isDeprecated = false
+                        isRecords = true
+                        isImmutablePojos = true
+                        isFluentSetters = true
+                    }
+                    /**
+                    target.apply {
+                        packageName = ""
+                        directory = "build/generated-src/jooq/main"  // default (can be omitted)
+                    }
+                    */
+                    strategy.name = "org.jooq.codegen.DefaultGeneratorStrategy"
+                }
+            }
+        }
+    }
+}

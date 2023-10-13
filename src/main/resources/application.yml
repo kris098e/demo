@@ -1,6 +1,6 @@
 micronaut:
   application:
-    name: demo
+    name: software-project
   router:
     static-resources:
       swagger:
@@ -11,9 +11,9 @@ micronaut:
         mapping: /swagger-ui/**
 datasources:
   default:
-    url: jdbc:postgresql://localhost:5432/postgres
+    url: jdbc:postgresql://localhost:5432/software
     username: postgres
-    password: ''
+    password: postgres
     driver-class-name: org.postgresql.Driver
     db-type: postgres
 liquibase:

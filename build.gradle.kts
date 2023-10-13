@@ -16,7 +16,7 @@ plugins {
 }
 
 version = "0.1"
-group = "com.example"
+group = "software sviiiiiin"
 
 val kotlinVersion=project.properties.get("kotlinVersion")
 repositories {

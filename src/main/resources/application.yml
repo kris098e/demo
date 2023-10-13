@@ -1,0 +1,22 @@
+micronaut:
+  application:
+    name: demo
+  router:
+    static-resources:
+      swagger:
+        paths: classpath:META-INF/swagger
+        mapping: /swagger/**
+      swagger-ui:
+        paths: classpath:META-INF/swagger/views/swagger-ui
+        mapping: /swagger-ui/**
+datasources:
+  default:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: ''
+    driver-class-name: org.postgresql.Driver
+    db-type: postgres
+liquibase:
+  datasources:
+    default:
+      change-log: classpath:db/liquibase-changelog.xml

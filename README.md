@@ -16,9 +16,13 @@ docker-compose -f docker-compose.yml up
 ```bash
 brew install liquibase
 
+pushd "src/main/resources/"
+
 liquibase update \
-  --changelog-file "src/main/resources/db/liquibase-changelog.xml"  \
+  --changelog-file "db/liquibase-changelog.xml"  \
   --url "jdbc:postgresql://localhost:5432/software" \
   --username "postgres" \
   --password "postgres"
+
+popd
 ```

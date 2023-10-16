@@ -15,4 +15,3 @@ object Api {
 fun main(args: Array<String>) {
 	run(*args)
 }
-

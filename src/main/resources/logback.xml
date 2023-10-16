@@ -1,0 +1,23 @@
+<configuration>
+
+    <!-- Convert Liquibase logging from JUL to SLF4J -->
+    <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+        <resetJUL>true</resetJUL>
+    </contextListener>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%cyan(%d{yyyy.MM.dd HH:mm:ss.SSS}) %highlight(%-5level) [%X{traceId}, %X{spanId}] %gray([%thread]) %magenta(%logger{36}) - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="STDOUT" />
+    </root>
+
+    <logger name="software" level="info"/>
+
+    <!-- Log SQL output -->
+    <logger name="org.jooq.tools.LoggerListener" level="info"/>
+
+</configuration>

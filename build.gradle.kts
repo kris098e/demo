@@ -52,6 +52,8 @@ dependencies {
     testImplementation("org.testcontainers:testcontainers")
     jooqGenerator("org.postgresql:postgresql:42.5.1")
     implementation("io.micronaut.sql:micronaut-jooq")
+    annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
+    implementation("ch.qos.logback:logback-classic:1.2.3")
 }
 
 

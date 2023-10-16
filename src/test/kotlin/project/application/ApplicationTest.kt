@@ -1,4 +1,5 @@
-package com.example
+package project.application
+
 import io.micronaut.runtime.EmbeddedApplication
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest
 import org.junit.jupiter.api.Assertions
@@ -6,7 +7,7 @@ import org.junit.jupiter.api.Test
 import jakarta.inject.Inject
 
 @MicronautTest
-class DemoTest {
+class ApplicationTest {
 
     @Inject
     lateinit var application: EmbeddedApplication<*>
@@ -15,5 +16,4 @@ class DemoTest {
     fun testItWorks() {
         Assertions.assertTrue(application.isRunning)
     }
-
 }

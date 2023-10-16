@@ -4,6 +4,7 @@ import io.micronaut.http.annotation.*
 import org.jooq.DSLContext
 import org.jooq.generated.tables.Users
 import org.jooq.generated.tables.records.UsersRecord
+import project.repository.Repo
 import project.repository.TestRepo
 import project.utils.exception.exceptions.NotFoundException
 import project.utils.logger.info
@@ -11,12 +12,13 @@ import project.utils.logger.logger
 
 @Controller("/demo")
 class DemoController (
-        val testRepo: TestRepo,
+        val testRepo: Repo,
         val dslContext: DSLContext
 ) {
 
     @Get(uri="/hej/{name}")
     fun index(@PathVariable name: String): String {
+        println(testRepo)
         logger.info { "DemoController.index" }
         val users = testRepo.getUsers(name)
         if (users.isEmpty()) {

@@ -1,3 +1,4 @@
+
 buildscript {
     dependencies {
         classpath("org.jooq:jooq:3.18.4")
@@ -55,6 +56,13 @@ dependencies {
     annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
     implementation("ch.qos.logback:logback-classic:1.2.3")
     testImplementation("io.mockk:mockk:1.13.5")
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api")
+    testImplementation("io.micronaut.test:micronaut-test-junit5")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine")
+    testAnnotationProcessor("io.micronaut:micronaut-inject-java")
+    testImplementation("io.micronaut.test:micronaut-test-spock")
 }
 
 

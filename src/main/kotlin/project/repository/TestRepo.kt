@@ -10,17 +10,17 @@ import project.utils.logger.logger
 import kotlin.math.log
 
 @Singleton
-class TestRepo (
+open class TestRepo (
         val dslContext: DSLContext,
-) {
+) : Repo {
 
-    fun getUsers(username: String): List<UsersRecord> {
+    override fun getUsers(username: String): List<UsersRecord> {
         logger.info { "TestRepo.getUsers" }
 
         return dslContext.selectFrom(Users.USERS).where(Users.USERS.USERNAME.eq(username)).fetch()
     }
 
-    fun insertUser(name: String): Int {
+    override fun insertUser(name: String): Int {
         logger.info { "TestRepo.insertUser" }
         val userRecord = UsersRecord().apply {
             this.username = name

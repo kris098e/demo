@@ -54,6 +54,7 @@ dependencies {
     implementation("io.micronaut.sql:micronaut-jooq")
     annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
     implementation("ch.qos.logback:logback-classic:1.2.3")
+    testImplementation("io.mockk:mockk:1.13.5")
 }
 
 

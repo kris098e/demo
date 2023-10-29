@@ -1,4 +1,3 @@
-
 buildscript {
     dependencies {
         classpath("org.jooq:jooq:3.18.4")
@@ -14,6 +13,8 @@ plugins {
     id("io.micronaut.application") version "4.0.4"
     id("io.micronaut.aot") version "4.0.4"
     id("nu.studer.jooq") version "8.2"
+    id("jacoco")
+    id("jacoco-report-aggregation")
 }
 
 version = "0.1"
@@ -146,3 +147,26 @@ jooq {
         }
     }
 }
+
+jacoco {
+    toolVersion = "0.8.9"
+}
+
+
+tasks.check {
+    dependsOn(tasks.named<JacocoReport>("testCodeCoverageReport"))
+}
+
+tasks.jacocoTestReport {
+    reports {
+        xml.apply { isEnabled = false }
+        csv.apply { isEnabled = false }
+        html.apply { isEnabled = true }
+    }
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.map {
+            fileTree(it).apply { exclude("**/generated-src/**",) }
+        }))
+    }
+}
+

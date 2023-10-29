@@ -1,6 +1,7 @@
 package project.controller
 
 import io.micronaut.http.annotation.*
+import io.swagger.v3.oas.annotations.OpenAPIDefinition
 import org.jooq.DSLContext
 import org.jooq.generated.tables.Users
 import org.jooq.generated.tables.records.UsersRecord

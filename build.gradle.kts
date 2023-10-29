@@ -13,6 +13,8 @@ plugins {
     id("io.micronaut.application") version "4.0.4"
     id("io.micronaut.aot") version "4.0.4"
     id("nu.studer.jooq") version "8.2"
+    id("jacoco")
+    id("jacoco-report-aggregation")
 }
 
 version = "0.1"
@@ -54,6 +56,14 @@ dependencies {
     implementation("io.micronaut.sql:micronaut-jooq")
     annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
     implementation("ch.qos.logback:logback-classic:1.2.3")
+    testImplementation("io.mockk:mockk:1.13.5")
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api")
+    testImplementation("io.micronaut.test:micronaut-test-junit5")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine")
+    testAnnotationProcessor("io.micronaut:micronaut-inject-java")
+    testImplementation("io.micronaut.test:micronaut-test-spock")
 }
 
 
@@ -137,3 +147,26 @@ jooq {
         }
     }
 }
+
+jacoco {
+    toolVersion = "0.8.9"
+}
+
+
+tasks.check {
+    dependsOn(tasks.named<JacocoReport>("testCodeCoverageReport"))
+}
+
+tasks.jacocoTestReport {
+    reports {
+        xml.apply { isEnabled = false }
+        csv.apply { isEnabled = false }
+        html.apply { isEnabled = true }
+    }
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.map {
+            fileTree(it).apply { exclude("**/generated-src/**",) }
+        }))
+    }
+}
+

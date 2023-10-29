@@ -11,3 +11,23 @@
 ```bash
 docker-compose -f docker-compose.yml up
 ```
+
+# To setup database
+```bash
+brew install liquibase
+
+pushd "src/main/resources/"
+
+liquibase update \
+  --changelog-file "db/liquibase-changelog.xml"  \
+  --url "jdbc:postgresql://localhost:5432/software" \
+  --username "postgres" \
+  --password "postgres"
+
+popd
+```
+
+# Generate test coverage report
+```bash
+./gradlew testCodeCoverageReport
+```

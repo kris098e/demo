@@ -26,3 +26,8 @@ liquibase update \
 
 popd
 ```
+
+# Generate test coverage report
+```bash
+./gradlew testCodeCoverageReport
+```

@@ -1,7 +1,5 @@
 package project.application.controller
 
-import io.micronaut.context.annotation.Bean
-import io.micronaut.context.annotation.Replaces
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.client.BlockingHttpClient
@@ -14,9 +12,7 @@ import io.mockk.mockk
 import jakarta.inject.Inject
 import org.jooq.generated.tables.records.UsersRecord
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import project.application.repo.setup.TestConfig
 import project.controller.Person
 import project.repository.Repo
 import project.repository.TestRepo

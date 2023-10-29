@@ -19,7 +19,6 @@ class DemoController (
 
     @Get(uri="/hej/{name}")
     fun index(@PathVariable name: String): String {
-        println(testRepo)
         logger.info { "DemoController.index" }
         val users = testRepo.getUsers(name)
         if (users.isEmpty()) {

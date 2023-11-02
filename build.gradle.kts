@@ -170,3 +170,17 @@ tasks.jacocoTestReport {
     }
 }
 
+tasks.test {
+    testLogging {
+        events("passed", "skipped", "failed")
+        showStandardStreams = true
+        addTestListener(object : TestListener {
+            override fun beforeTest(testDescriptor: TestDescriptor) {}
+            override fun afterTest(testDescriptor: TestDescriptor, result: TestResult) {
+                println("Test ${testDescriptor.displayName} took ${result.endTime - result.startTime} ms")
+            }
+            override fun beforeSuite(suite: TestDescriptor) {}
+            override fun afterSuite(suite: TestDescriptor, result: TestResult) {}
+        })
+    }
+}

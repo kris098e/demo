@@ -27,6 +27,11 @@ liquibase update \
 popd
 ```
 
+# generate jooq
+```bash
+./gradlew generateJooq
+```
+
 # Generate test coverage report
 ```bash
 ./gradlew testCodeCoverageReport

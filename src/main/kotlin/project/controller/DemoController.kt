@@ -3,8 +3,7 @@ package project.controller
 import io.micronaut.http.annotation.*
 import io.swagger.v3.oas.annotations.OpenAPIDefinition
 import org.jooq.DSLContext
-import org.jooq.generated.tables.Users
-import org.jooq.generated.tables.records.UsersRecord
+import org.jooq.generated.tables.records.UserRecord
 import project.repository.Repo
 import project.repository.TestRepo
 import project.utils.exception.exceptions.NotFoundException

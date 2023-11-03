@@ -1,10 +1,10 @@
 package project.repository
 
-import org.jooq.generated.tables.records.UsersRecord
+import org.jooq.generated.tables.records.UserRecord
 
 interface Repo {
 
-    fun getUsers(username: String): List<UsersRecord>
+    fun getUsers(username: String): List<UserRecord>
 
     fun insertUser(name: String): Int
 }

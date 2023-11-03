@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="shift" author="kristian.abrahamsen">
+        <comment> create table that looks like
+            - ShowId (foreign key, show)
+            - roleId (foreign key to roletype)
+            - filled boolean
+        </comment>
+
+        <createTable tableName="shift">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="shift_id_PKey"/>
+            </column>
+            <column name="show_id" type="bigint">
+                <constraints nullable="false"
+                             referencedColumnNames="id"
+                             referencedTableName="show"
+                             foreignKeyName="show_id_FKey"
+                />
+            </column>
+            <column name="role_type_id" type="bigint">
+                <constraints nullable="false"
+                             referencedColumnNames="id"
+                             referencedTableName="role_type"
+                             foreignKeyName="role_type_id_FKey"
+                />
+            </column>
+            <column name="filled" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

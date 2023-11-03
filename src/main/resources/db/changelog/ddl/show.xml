@@ -4,18 +4,15 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <changeSet id="202313100757" author="kristian.abrahamse">
-        <createTable tableName="users">
-            <column name="id" autoIncrement="true" type="bigint" >
-                <constraints primaryKey="true" nullable="false" primaryKeyName="PK_user_id"/>
+    <changeSet id="show" author="kristian.abrahamsen">
+        <createTable tableName="show">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="show_id_PKey"/>
             </column>
-            <column name="username" type="varchar(255)">
+            <column name="from" type="timestamp with time zone">
                 <constraints nullable="false"/>
             </column>
-            <column name="password" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="enabled" type="boolean">
+            <column name="to" type="timestamp with time zone">
                 <constraints nullable="false"/>
             </column>
         </createTable>

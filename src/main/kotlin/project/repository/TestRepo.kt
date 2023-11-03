@@ -2,9 +2,8 @@ package project.repository
 
 import jakarta.inject.Singleton
 import org.jooq.DSLContext
-import org.jooq.generated.tables.Users
-import org.jooq.generated.tables.records.UsersRecord
-import org.jooq.impl.DefaultDSLContext
+import org.jooq.generated.tables.User
+import org.jooq.generated.tables.records.UserRecord
 import project.utils.logger.info
 import project.utils.logger.logger
 import kotlin.math.log
@@ -14,15 +13,15 @@ open class TestRepo (
         val dslContext: DSLContext,
 ) : Repo {
 
-    override fun getUsers(username: String): List<UsersRecord> {
+    override fun getUsers(username: String): List<UserRecord> {
         logger.info { "TestRepo.getUsers" }
 
-        return dslContext.selectFrom(Users.USERS).where(Users.USERS.USERNAME.eq(username)).fetch()
+        return dslContext.selectFrom(User.USER).where(User.USER.USERNAME.eq(username)).fetch()
     }
 
     override fun insertUser(name: String): Int {
         logger.info { "TestRepo.insertUser" }
-        val userRecord = UsersRecord().apply {
+        val userRecord = UserRecord().apply {
             this.username = name
             this.password = "password"
             this.enabled = true

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="user" author="kristian.abrahamsen">
+        <comment> creat table that looks like
+            - id(database)
+            - uuid(auto generated in code)
+            - name()
+            - username(login, string)
+            - password(login, string)
+            - email (string)
+            - phone number (String)
+            - isSuper (boolean)
+            - ticketCount (int)
+            - totalShifts (int)
+        </comment>
+
+        <createTable tableName="user">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="user_id_PKey"/>
+            </column>
+            <column name="uuid" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="username" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="phone_number" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_super" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ticket_count" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="total_shifts" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

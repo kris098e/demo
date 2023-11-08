@@ -1,26 +1,30 @@
 # generate
-To generate a JWT token in a Micronaut Kotlin project, you can use the java-jwt library. Here's a step-by-step guide on how to do this:
+To add the username and password to the JWT token in a Micronaut Kotlin project, you can use the java-jwt library. Here's a step-by-step guide on how to do this:
 
 Add the java-jwt dependency to your project: You can do this by adding the following line to your build.gradle file:
-```kotlin
+``` kotlin
 implementation("io.jsonwebtoken:jjwt:0.9.1")
 ```
-Create a function to generate the JWT: This function should create a JwtBuilder object, set the necessary claims, sign the JWT with your secret key, and then serialize it to a string. Here's an example:
 
-```kotlin
+Create a function to generate the JWT with username and password: This function should create a JwtBuilder object, set the necessary claims (including the username and password), sign the JWT with your secret key, and then serialize it to a string. Here's an example:
+``` kotlin
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
-fun generateJwt(userId: String, secretKey: String): String {
-   return Jwts.builder()
-       .setSubject(userId)
-       .signWith(SignatureAlgorithm.HS256, secretKey)
-       .compact()
+
+fun generateJwt(userId: String, username: String, password: String, secretKey: String): String {
+  return Jwts.builder()
+      .setSubject(userId)
+      .claim("username", username)
+      .claim("password", password)
+      .signWith(SignatureAlgorithm.HS256, secretKey)
+      .compact()
 }
 ```
-
-In this example, the userId is the subject of the JWT, and the secretKey is the key used to sign the JWT. You should replace these with your actual user ID and secret key.
+In this example, the userId is the subject of the JWT, the username and password are additional claims, and the secretKey is the key used to sign the JWT. You should replace these with your actual user ID, username, password, and secret key.
 
 Please note that this is a simplified example. In a real-world application, you would likely need to set more claims in the JWT, such as the issuer, audience, and expiration time. You might also need to handle cases where the JWT cannot be generated, such as when the secret key is not available.
+
+Also, be aware that storing sensitive information like passwords in a JWT is generally not recommended due to security concerns. JWTs are not encrypted, so anyone who intercepts the JWT can read its contents. Therefore, you should avoid storing sensitive information in a JWT unless it's absolutely necessary and you have appropriate security measures in place.
 
 # parse
 To parse a JWT token into a class in a Micronaut Kotlin project, you would typically need to use a JWT library, such as java-jwt or jjwt, to decode the JWT and map the decoded data into your class. Here's a step-by-step guide on how to do this:

@@ -32,6 +32,9 @@
             <column name="filled" type="boolean">
                 <constraints nullable="false"/>
             </column>
+            <column name="uuid" type="varchar(40)">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
     </changeSet>
 </databaseChangeLog>

@@ -15,7 +15,6 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import project.controller.Person
 import project.repository.Repo
-import project.repository.TestRepo
 import kotlin.reflect.KClass
 
 @MicronautTest

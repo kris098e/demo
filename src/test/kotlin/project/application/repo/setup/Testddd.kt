@@ -4,7 +4,6 @@ import io.micronaut.test.extensions.junit5.annotation.MicronautTest
 import jakarta.inject.Inject
 import org.jooq.generated.tables.records.UsersRecord
 import org.junit.jupiter.api.Test
-import project.repository.TestRepo
 
 @MicronautTest
 class Testddd {

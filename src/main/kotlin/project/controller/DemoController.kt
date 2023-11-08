@@ -1,35 +1,28 @@
 package project.controller
 
 import io.micronaut.http.annotation.*
-import io.swagger.v3.oas.annotations.OpenAPIDefinition
 import org.jooq.DSLContext
-import org.jooq.generated.tables.records.UserRecord
 import project.repository.Repo
-import project.repository.TestRepo
+import project.security.JwtService
+import project.security.dto.AuthenticatedUser
 import project.utils.exception.exceptions.NotFoundException
 import project.utils.logger.info
 import project.utils.logger.logger
 
 @Controller("/demo")
 class DemoController (
-        val testRepo: Repo,
-        val dslContext: DSLContext
+        val dslContext: DSLContext,
+        val jwtService: JwtService,
 ) {
 
     @Get(uri="/hej/{name}")
     fun index(@PathVariable name: String): String {
-        logger.info { "DemoController.index" }
-        val users = testRepo.getUsers(name)
-        if (users.isEmpty()) {
-            throw NotFoundException("User not found")
-        }
-        return users.first().username
+        return jwtService.generateJwt(userId = "name", username = name, password = "hej")
     }
 
-    @Post(uri="/hej")
-    fun sss(@Body person: Person,): Hej {
-        val test = testRepo.insertUser(person.name)
-        return Hej("hej ${person.name} $test")
+    @Get(uri = "/jwtparse")
+    fun dddd(@Header("Authorization") header: String): AuthenticatedUser {
+        return jwtService.parseJwtIntoUser(header)
     }
 
     companion object {

@@ -6,5 +6,5 @@ interface Repo {
 
     fun getUsers(username: String): List<UserRecord>
 
-    fun insertUser(name: String): Int
+    fun insertUser(userRecord: UserRecord): Int
 }

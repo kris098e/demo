@@ -15,5 +15,13 @@
             <column name="name" value="ROLE_ADMIN"/>
         </insert>
 
+        <sql>
+            INSERT INTO role_type (type) VALUES ('Technical');
+            INSERT INTO role_type (type) VALUES ('Cleaning');
+            INSERT INTO role_type (type) VALUES ('Sales');
+            INSERT INTO role_type (type) VALUES ('Facility Service');
+            INSERT INTO role_type (type) VALUES ('PR');
+        </sql>
+
     </changeSet>
 </databaseChangeLog>

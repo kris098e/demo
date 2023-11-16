@@ -9,4 +9,6 @@
     <include file="changelog/ddl/role.xml" relativeToChangelogFile="true"/>
     <include file="changelog/ddl/show.xml" relativeToChangelogFile="true"/>
     <include file="changelog/ddl/shift.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/data/initial-roles.xml" relativeToChangelogFile="true"/>
+
 </databaseChangeLog>

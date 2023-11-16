@@ -15,4 +15,5 @@ data class CreaseUserResponseDto(
     val roles: List<String>,
     val ticketCount: Int,
     val totalShifs: Int,
+    val jwt: String,
 )

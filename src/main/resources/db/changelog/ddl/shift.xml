@@ -29,11 +29,15 @@
                              foreignKeyName="role_type_id_FKey"
                 />
             </column>
-            <column name="filled" type="boolean">
-                <constraints nullable="false"/>
-            </column>
             <column name="uuid" type="varchar(40)">
                 <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="true"
+                             referencedColumnNames="id"
+                             referencedTableName="user"
+                             foreignKeyName="user_id_FKey"
+                />
             </column>
         </createTable>
     </changeSet>

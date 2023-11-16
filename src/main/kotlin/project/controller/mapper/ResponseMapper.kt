@@ -4,7 +4,7 @@ import org.jooq.generated.tables.records.UserRecord
 import project.controller.dto.CreaseUserResponseDto
 import java.util.*
 
-fun UserRecord.toUserResponseDto(roles: List<String>): CreaseUserResponseDto {
+fun UserRecord.toUserResponseDto(roles: List<String>, jwt: String,): CreaseUserResponseDto {
     val userRecord = this
     return CreaseUserResponseDto(
         name = userRecord.name,
@@ -16,6 +16,7 @@ fun UserRecord.toUserResponseDto(roles: List<String>): CreaseUserResponseDto {
         ticketCount = userRecord.ticketCount,
         totalShifs = userRecord.totalShifts,
         uuid = UUID.fromString(userRecord.uuid),
-        password = userRecord.password // Bcrypted
+        password = userRecord.password, // Bcrypted
+        jwt = jwt,
     )
 }

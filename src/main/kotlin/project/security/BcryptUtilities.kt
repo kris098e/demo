@@ -7,5 +7,4 @@ fun String.encrypt(): String {
     val hash = hash(this)
     return String(hash, Charsets.UTF_8)
 }
-fun String.verifyEncryptEquals(expected: String) =
-    verify(input = expected, expected = this.toByteArray())
+fun String.verifyEncryptEquals(expected: String) = this == expected

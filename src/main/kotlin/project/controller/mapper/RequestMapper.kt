@@ -5,7 +5,7 @@ import project.controller.dto.CreateUserDto
 import project.security.encrypt
 import java.util.*
 
-fun CreateUserDto.toUserRecord(): UserRecord {
+fun CreateUserDto.toUserRecord(uuid: UUID): UserRecord {
     val userDto = this
     return UserRecord().apply {
         this.name = userDto.name
@@ -14,6 +14,6 @@ fun CreateUserDto.toUserRecord(): UserRecord {
         this.email = userDto.email
         this.phoneNumber = userDto.phoneNumber
         this.isSuper = userDto.isSuper
-        this.uuid = UUID.randomUUID().toString()
+        this.uuid = uuid.toString()
     }
 }

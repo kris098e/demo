@@ -18,9 +18,8 @@ class JwtConfig {
 class JwtService(
     private val jwtConfig: JwtConfig,
 ) {
-    fun generateJwt(userId: String, username: String, password: String,): String {
+    fun generateJwt(username: String, password: String,): String {
         return Jwts.builder()
-            .setSubject(userId)
             .claim("username", username)
             .claim("password", password)
             .signWith(SignatureAlgorithm.HS256, jwtConfig.secretKey)

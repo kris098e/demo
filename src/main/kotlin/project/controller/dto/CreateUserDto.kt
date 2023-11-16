@@ -17,7 +17,6 @@ data class CreateUserDto(
     @field:Size(min = 8, max = 8)
     val phoneNumber: String,
     val isSuper: Boolean,
-    @field:Size(min = 1)
     val roles: List<Role>,
 )
 

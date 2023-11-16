@@ -18,6 +18,10 @@ data class RestApiError(
             return RestApiError(HttpStatus.BAD_REQUEST, message)
         }
 
+        fun unauthorized(message: String): RestApiError {
+            return RestApiError(HttpStatus.UNAUTHORIZED, message)
+        }
+
         fun internalServerError(message: String): RestApiError {
             return RestApiError(HttpStatus.INTERNAL_SERVER_ERROR, message)
         }

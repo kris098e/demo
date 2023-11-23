@@ -1,7 +1,5 @@
 package project.controller.mapper
 
-import org.jooq.generated.tables.Shift
-import org.jooq.generated.tables.records.ShiftRecord
 import org.jooq.generated.tables.records.ShowRecord
 import org.jooq.generated.tables.records.UserRecord
 import project.controller.dto.CreaseUserResponseDto
@@ -46,6 +44,17 @@ fun ShiftDto.toShiftsResponseDto(): ShiftsResponseDto {
         uuid = shiftDto.uuid,
         role = shiftDto.shiftRole,
         show = shiftDto.show.toShowResponseDto(),
-        user =
+        user = shiftDto.user.toUserResponseDto(roles = shiftDto.userRoles)
+    )
+}
+
+fun UserRecord.toUserResponseDto(roles: List<String>): UserResponseDto {
+    val userRecord = this
+    return UserResponseDto(
+        uuid = userRecord.uuid,
+        name = userRecord.name,
+        email = userRecord.email,
+        phoneNumber = userRecord.phoneNumber,
+        roles = roles,
     )
 }

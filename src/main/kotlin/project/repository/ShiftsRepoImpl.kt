@@ -4,7 +4,6 @@ import jakarta.inject.Singleton
 import org.jooq.DSLContext
 import org.jooq.Record
 import org.jooq.generated.Tables.*
-import org.jooq.generated.tables.records.ShiftRecord
 import project.repository.dto.ShiftDto
 
 @Singleton
@@ -23,14 +22,14 @@ class ShiftsRepoImpl(
         val user = into(USER)
         val show = into(SHOW)
 
-        val roles = rolesRepo.getRoles(user.id)
+        val userRoles = rolesRepo.getRoles(user.id)
         val shiftRole = rolesRepo.getRole(shift.roleTypeId)
 
         return ShiftDto(
             uuid = shift.uuid,
-            record = user,
+            user = user,
             show = show,
-            userRoles = roles,
+            userRoles = userRoles,
             shiftRole = shiftRole,
         )
     }

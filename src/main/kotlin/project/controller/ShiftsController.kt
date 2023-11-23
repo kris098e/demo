@@ -4,6 +4,7 @@ import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.Header
 import project.controller.dto.ShiftsResponseDto
+import project.controller.mapper.toShiftsResponseDto
 import project.repository.ShiftsRepo
 import project.security.SecurityService
 
@@ -16,9 +17,9 @@ class ShiftsController(
     @Get("/all")
     fun getAllShifts(
         @Header("Authorization") token: String,
-    ): ShiftsResponseDto {
+    ): List<ShiftsResponseDto> {
         securityService.verifyAuthentication(token)
-        return shiftsRepo.fetchAllShifts().toShiftsResponseDto()
+        return shiftsRepo.fetchAllShifts().map { it.toShiftsResponseDto() }
     }
 
     @Get("/")

@@ -10,7 +10,6 @@ class ShowsRepoImpl(
     private val dslContext: DSLContext
 ) : ShowsRepo {
     override fun fetchAllShows(): List<ShowRecord> {
-        return dslContext.selectFrom(SHOW)
-            .fetch()
+        return dslContext.selectFrom(SHOW).fetch()
     }
 }

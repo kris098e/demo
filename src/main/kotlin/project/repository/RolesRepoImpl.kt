@@ -32,6 +32,21 @@ class RolesRepoImpl(
     }
 
     override fun getRoles(userId: Long): List<String> {
-        return listOf("admin")
+        val roleIds = dslContext.selectFrom(USER_ROLE)
+            .where(USER_ROLE.USER_ID.eq(userId))
+            .fetch()
+            .map { it.roleTypeId }
+
+        return dslContext.selectFrom(ROLE_TYPE)
+            .where(ROLE_TYPE.ID.`in`(roleIds))
+            .fetch()
+            .map { it.type }
+    }
+
+    override fun getRole(roleId: Long): String {
+        return dslContext.selectFrom(ROLE_TYPE)
+            .where(ROLE_TYPE.ID.eq(roleId))
+            .fetchOne()!!
+            .type
     }
 }

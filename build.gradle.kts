@@ -64,6 +64,9 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-engine")
     testAnnotationProcessor("io.micronaut:micronaut-inject-java")
     testImplementation("io.micronaut.test:micronaut-test-spock")
+
+    implementation("io.jsonwebtoken:jjwt:0.9.1")
+    implementation("de.nycode:bcrypt:2.2.0")
 }
 
 

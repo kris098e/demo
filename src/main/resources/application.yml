@@ -20,3 +20,5 @@ liquibase:
   datasources:
     default:
       change-log: classpath:db/liquibase-changelog.xml
+jwt:
+  secretKey: heeeeeeeeeeeej

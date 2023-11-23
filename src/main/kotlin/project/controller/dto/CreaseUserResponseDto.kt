@@ -7,7 +7,7 @@ import java.util.UUID
 data class CreaseUserResponseDto(
     val uuid: UUID,
     val name: String,
-    val password: String, // Bcrypted
+    val password: String,
     val username: String,
     val email: String,
     val phoneNumber: String,

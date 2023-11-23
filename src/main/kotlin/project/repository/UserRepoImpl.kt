@@ -4,6 +4,7 @@ import jakarta.inject.Singleton
 import org.jooq.DSLContext
 import org.jooq.generated.Tables.USER
 import org.jooq.generated.tables.records.UserRecord
+import org.jooq.impl.DSL
 
 @Singleton
 class UserRepoImpl(
@@ -16,9 +17,12 @@ class UserRepoImpl(
     }
 
     override fun insertUser(userRecord: UserRecord): UserRecord {
-        return dslContext.insertInto(USER)
-            .set(userRecord)
-            .returning()
-            .fetchOne()!!
+        return dslContext.transactionResult { config ->
+            val context = DSL.using(config)
+            context.insertInto(USER)
+                .set(userRecord)
+                .returning()
+                .fetchOne()!!
+        }
     }
 }

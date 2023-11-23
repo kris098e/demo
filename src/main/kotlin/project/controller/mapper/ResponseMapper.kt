@@ -16,7 +16,7 @@ fun UserRecord.toUserResponseDto(roles: List<String>, jwt: String,): CreaseUserR
         ticketCount = userRecord.ticketCount,
         totalShifs = userRecord.totalShifts,
         uuid = UUID.fromString(userRecord.uuid),
-        password = userRecord.password, // Bcrypted
+        password = userRecord.password,
         jwt = jwt,
     )
 }

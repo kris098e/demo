@@ -3,7 +3,6 @@ package project.controller.dto
 import io.micronaut.serde.annotation.Serdeable
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.Size
-import org.jooq.generated.tables.records.UserRecord
 
 @Serdeable
 data class CreateUserDto(
@@ -21,6 +20,9 @@ data class CreateUserDto(
 )
 
 @Serdeable
-enum class Role {
-    CLEANING, TECHNICAL, SALES, MAINTENANCE
+enum class Role(roleName: String) {
+    CLEANING("Cleaning"),
+    TECHNICAL("Technical"),
+    SALES("Sales"),
+    MAINTENANCE("Maintenance")
 }

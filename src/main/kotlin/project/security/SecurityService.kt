@@ -13,8 +13,10 @@ class SecurityService(
 
     fun verifyAuthentication(token: String): UserRecord {
         val authenticatedUser = jwtService.parseJwtIntoUser(token)
-        val user = userRepo.getUser(username = authenticatedUser.username)
-        if (!user.password.verifyEncryptEquals(authenticatedUser.password)) {
+        val user =
+            userRepo.getUser(username = authenticatedUser.username)
+            ?: throw UnauthorizedRequestException("Invalid credentials")
+        if (user.password != authenticatedUser.password) {
             throw UnauthorizedRequestException("Invalid credentials")
         }
 

@@ -1,0 +1,32 @@
+<!-- Variation of this: https://mdbootstrap.com/docs/standard/extended/login/#section-5 -->
+{% extends "header.html" %}
+{% block body %}
+<section class="vh-100">
+    <div class="container-fluid">
+        <center>
+            <br>
+            <form style="width: 23rem;", method="post">
+                {% if error != '' %}
+                <p class="text-danger">{{error}}</p>
+                {% endif %}
+                <h3 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Log ind</h3>
+
+                <div class="form-outline mb-4">
+                    <input type="text" id="username" class="form-control form-control-lg" placeholder = "Brugernavn" name="username" value="{{request.form.username}}">
+                </div>
+
+                <div class="form-outline mb-4">
+                    <input type="password" id="password" class="form-control form-control-lg" placeholder = "Kodeord" name="password" value="{{request.form.password}}">
+                </div>
+
+                <div class="pt-1 mb-4">
+                    <button class="btn btn-info btn-lg btn-block" type="submit" value="Login">Log ind</button>
+                </div>
+
+                 <!--<p class="small mb-5 pb-lg-2"><a class="text-muted" href="#!">Glemt kodeord?</a></p>-->
+                <p>Ingen bruger? <a href="/register" class="link-info">Opret en bruger</a></p>
+            </form>
+        </center>
+    </div>
+</section>
+{% endblock %}

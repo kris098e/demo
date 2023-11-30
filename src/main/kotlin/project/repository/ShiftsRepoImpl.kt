@@ -24,7 +24,7 @@ class ShiftsRepoImpl(
         val user = into(USER)
         val show = into(SHOW)
 
-        val userRoles = rolesRepo.getRoles(user.id)
+        val userRoles = user.id?.let { rolesRepo.getRoles(it) } ?: emptyList()
         val shiftRole = rolesRepo.getRole(shift.roleTypeId)
 
         return ShiftDto(

@@ -1,15 +1,12 @@
 package project.controller
 
-import io.micronaut.http.annotation.Body
-import io.micronaut.http.annotation.Controller
-import io.micronaut.http.annotation.Header
-import io.micronaut.http.annotation.Post
-import io.micronaut.http.annotation.Produces
+import io.micronaut.http.annotation.*
 import io.micronaut.validation.Validated
 import jakarta.validation.Valid
 import project.controller.dto.CreateUserDto
 import project.controller.dto.CreaseUserResponseDto
 import project.controller.dto.LoginDto
+import project.controller.dto.UserResponseDto
 import project.controller.mapper.toUserRecord
 import project.controller.mapper.toUserResponseDto
 import project.factory.UuidGenerator
@@ -56,13 +53,24 @@ class UserController (
     fun login(@Valid @Body createUserDto: LoginDto, ): String {
         val userRecord = userRepo.getUser(username = createUserDto.username)
             ?: throw UnauthorizedRequestException("Invalid credentials")
-        if (userRecord.password != createUserDto.password) {
+        if (userRecord.first.password != createUserDto.password) {
             throw UnauthorizedRequestException("Invalid credentials")
         }
 
         return jwtService.generateJwt(
-            username = userRecord.username,
-            password = userRecord.password,
+            username = userRecord.first.username,
+            password = userRecord.first.password,
         )
+    }
+
+    @Get("/all")
+    fun getAllUsers(@Header("Authorization") token: String): List<UserResponseDto> {
+        securityService.verifyAuthentication(token)
+
+        return userRepo.getAllUsers().map { userRecord ->
+            val roles = rolesRepo.getRoles(userRecord.id)
+
+            userRecord.toUserResponseDto(roles = roles)
+        }
     }
 }

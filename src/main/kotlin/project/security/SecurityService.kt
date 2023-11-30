@@ -16,10 +16,10 @@ class SecurityService(
         val user =
             userRepo.getUser(username = authenticatedUser.username)
             ?: throw UnauthorizedRequestException("Invalid credentials")
-        if (user.password != authenticatedUser.password) {
+        if (user.first.password != authenticatedUser.password) {
             throw UnauthorizedRequestException("Invalid credentials")
         }
 
-        return user
+        return user.first
     }
 }

@@ -1,20 +1,30 @@
 import requests
 import json
+import os
+import datetime as dt
 
 from hashlib import sha256
 from flask import request, Flask, render_template, redirect, url_for, session
 from models import Show, Shift
-from datetime import datetime
+from urllib.parse import quote_plus
 
 app = Flask(__name__)
 BASE_URL = 'http://localhost:8080/api'
+app.secret_key = os.urandom(32)
 
 @app.route('/', methods=['GET'])
 def homepage():
+    if 'jwt' not in session:
+        return redirect(url_for('login_page'))
     # Get all shifts and shows
+    today = quote_plus(str(dt.datetime.now(dt.timezone.utc).astimezone().isoformat()))
+    token = session['jwt']
     r = requests.get(
-        url=f'{BASE_URL}/shifts/all',
-        headers={'accept': 'application/json'}
+        url=f'{BASE_URL}/shifts/all/{today}',
+        headers={
+            'Accept': 'application/json',
+            'Authorization': f'{token}'
+        }
     )
 
     if r.status_code != 200:
@@ -41,7 +51,7 @@ def homepage():
     
     shows = shows.values()
     for show in shows:
-        show.shifts = sorted(show.shifts, key=lambda shift: datetime.fromisoformat(shift.start))
+        show.shifts = sorted(show.shifts, key=lambda shift: dt.datetime.fromisoformat(shift.start))
     
     return render_template('index.html', shows=shows, user='', admin=False)
 
@@ -62,6 +72,7 @@ def login_request():
     )
 
     if r.status_code == 200:
+        session['jwt'] = r.text
         return redirect(url_for('homepage'))
     else:
         print(r.status_code, r.text, sep='\t')

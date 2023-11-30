@@ -45,11 +45,11 @@ def homepage():
     
     return render_template('index.html', shows=shows, user='', admin=False)
 
-@app.route('/login', methods=['GET'])
+@app.route('/login/', methods=['GET'])
 def login_page():
     return render_template('login.html', user='', admin=False)
 
-@app.route('/login', methods=['POST'])
+@app.route('/login/', methods=['POST'])
 def login_request():
     attempted_username = request.form['username']
     attempted_password = request.form['password']

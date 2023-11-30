@@ -46,7 +46,7 @@ class ShiftsRepoImpl(
     companion object {
         private val userShowShiftJoin = SHIFT.join(SHOW)
             .on(SHIFT.SHOW_ID.eq(SHOW.ID))
-            .join(USER)
+            .leftJoin(USER)
             .on(SHIFT.USER_ID.eq(USER.ID))
     }
 }

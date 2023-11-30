@@ -20,6 +20,7 @@ class ShiftsRepoImpl(
     }
 
     fun Record.toShiftRecord(): ShiftDto {
+        println("Record: $this")
         val shift = into(SHIFT)
         val user = into(USER)
         val show = into(SHOW)

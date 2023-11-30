@@ -1,19 +1,20 @@
 package project.controller
 
 import io.micronaut.core.annotation.Nullable
-import io.micronaut.http.annotation.Controller
-import io.micronaut.http.annotation.Get
-import io.micronaut.http.annotation.Header
-import io.micronaut.http.annotation.QueryValue
+import io.micronaut.http.annotation.*
 import project.controller.dto.ShiftsResponseDto
 import project.controller.mapper.toShiftsResponseDto
+import project.repository.RolesRepo
 import project.repository.ShiftsRepo
 import project.security.SecurityService
+import project.utils.exception.exceptions.NotFoundException
 import java.time.OffsetDateTime
+import java.util.UUID
 
 @Controller("/api/shifts")
 class ShiftsController(
     private val shiftsRepo: ShiftsRepo,
+    private val rolesRepo: RolesRepo,
     private val securityService: SecurityService
 ) {
 
@@ -38,5 +39,19 @@ class ShiftsController(
             id = user.id,
             from = from ?: OffsetDateTime.now().minusYears(1),
         ).map { it.toShiftsResponseDto() }
+    }
+
+    @Patch("/{uuid}/{role}")
+    fun updateShift(
+        @Header("Authorization") token: String,
+        @PathVariable uuid: String,
+        @PathVariable role: String,
+    ): ShiftsResponseDto {
+        val user = securityService.verifyAuthentication(token)
+        return shiftsRepo.updateShift(
+            shiftUuid = UUID.fromString(uuid),
+            userId = user.id,
+            roleId = rolesRepo.getRoleId(role = role) ?: throw NotFoundException("Role not found"),
+        )?.toShiftsResponseDto() ?: throw NotFoundException("Shift not found")
     }
 }

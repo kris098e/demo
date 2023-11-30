@@ -2,6 +2,7 @@ import requests
 import json
 import os
 import datetime as dt
+import utils
 
 from hashlib import sha256
 from flask import request, Flask, render_template, redirect, url_for, session
@@ -33,25 +34,22 @@ def homepage():
 
     response = json.loads(r.text)
     shows = set()
-    for shift in response:
-        shows.add(shift['show'])
-    
-    shows = {show['uuid']: Show(show['title'], []) for show in shows}
+    shows = {shift['show']['uuid']: Show(shift['show']['title'], []) for shift in response}
 
     for shift in response:
         shows[shift['show']['uuid']].shifts.append(
             Shift(
                 shift['uuid'],
                 shift['show']['uuid'],
-                shift['show']['from'],
-                shift['show']['to'],
+                utils.parse_isoformat(shift['show']['from']),
+                utils.parse_isoformat(shift['show']['to']),
                 shift['role']
             )
         )
     
     shows = shows.values()
     for show in shows:
-        show.shifts = sorted(show.shifts, key=lambda shift: dt.datetime.fromisoformat(shift.start))
+        show.shifts = sorted(show.shifts, key=lambda shift: shift.start)
     
     return render_template('index.html', shows=shows, user='', admin=False)
 

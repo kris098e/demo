@@ -1,0 +1,24 @@
+{% extends "header.html" %}
+{% block body %}
+<div class="container">
+	<h1 class="text-center">Vagter</h1>
+    {% for show in shows %}
+        <h2>{{show.name}}</h2>
+        <table class="table table-striped table-hover table-bordered">
+            <tr>
+                <th>Start tid</th>
+                <th>Slut tid</th>
+                <th>Rolle</th>
+            </tr>
+            {% for shift in show.shifts %}
+                <tr>
+                    <th>{{shift.start}}</th>
+                    <th>{{shift.end}}</th>
+                    <th>{{shift.role}}</th>
+                </tr>
+            {% endfor %}
+        </table>
+        <br>
+    {% endfor %}
+</div>
+{% endblock %}

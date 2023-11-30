@@ -44,7 +44,7 @@ fun ShiftDto.toShiftsResponseDto(): ShiftsResponseDto {
         uuid = shiftDto.uuid,
         role = shiftDto.shiftRole,
         show = shiftDto.show.toShowResponseDto(),
-        user = shiftDto.user.toUserResponseDto(roles = shiftDto.userRoles)
+        user = shiftDto.user?.toUserResponseDto(roles = shiftDto.userRoles)
     )
 }
 

@@ -39,7 +39,7 @@ class UserController (
         val userUuid = uuidGenerator.generateUuid()
         val userRecord = createUserDto.toUserRecord(uuid = userUuid)
         val storedUser = userRepo.insertUser(userRecord)
-        val roles = createUserDto.roles.map { it.name }
+        val roles = createUserDto.roles.map { it.roleName }
         rolesRepo.storeRoles(storedUser.id, roles)
         val jwt = jwtService.generateJwt(
             username = storedUser.username,
@@ -72,13 +72,5 @@ class UserController (
 
             userRecord.toUserResponseDto(roles = roles)
         }
-    }
-
-    @Get
-    fun getChair(): String {
-        return jwtService.generateJwt(
-            username = "chairman",
-            password = "3d7eb3d3dab17ee509a6911e0feb928eb46e956adcada792493614bfb97a7a9c"
-        )
     }
 }

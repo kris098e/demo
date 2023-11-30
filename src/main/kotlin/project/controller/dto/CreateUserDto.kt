@@ -20,7 +20,7 @@ data class CreateUserDto(
 )
 
 @Serdeable
-enum class Role(roleName: String) {
+enum class Role(val roleName: String) {
     CLEANING("Cleaning"),
     TECHNICAL("Technical"),
     SALES("Sales"),

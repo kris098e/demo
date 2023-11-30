@@ -49,4 +49,11 @@ class RolesRepoImpl(
             .fetchOne()!!
             .type
     }
+
+    override fun getRoleId(role: String): Long? {
+        return dslContext.selectFrom(ROLE_TYPE)
+            .where(ROLE_TYPE.TYPE.eq(role))
+            .fetchOne()
+            ?.id
+    }
 }

@@ -4,8 +4,10 @@ import jakarta.inject.Singleton
 import org.jooq.DSLContext
 import org.jooq.Record
 import org.jooq.generated.Tables.*
+import org.jooq.impl.DSL
 import project.repository.dto.ShiftDto
 import java.time.OffsetDateTime
+import java.util.*
 
 @Singleton
 class ShiftsRepoImpl(
@@ -41,6 +43,20 @@ class ShiftsRepoImpl(
             .where(SHIFT.USER_ID.eq(id))
             .and(SHOW.FROM.greaterOrEqual(from))
             .fetch { it.toShiftRecord() }
+    }
+
+    override fun updateShift(shiftUuid: UUID, userId: Long, roleId: Long,): ShiftDto? {
+        return dslContext.transactionResult { conf ->
+            val context = DSL.using(conf)
+
+            context.update(SHIFT)
+                .set(SHIFT.USER_ID, userId)
+                .where(SHIFT.UUID.eq(shiftUuid.toString()))
+                .and(SHIFT.ROLE_TYPE_ID.eq(roleId))
+                .returning()
+                .fetchOne()
+                ?.toShiftRecord()
+        }
     }
 
     companion object {

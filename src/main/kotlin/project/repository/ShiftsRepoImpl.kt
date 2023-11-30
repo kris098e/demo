@@ -5,15 +5,17 @@ import org.jooq.DSLContext
 import org.jooq.Record
 import org.jooq.generated.Tables.*
 import project.repository.dto.ShiftDto
+import java.time.OffsetDateTime
 
 @Singleton
 class ShiftsRepoImpl(
     private val dslContext: DSLContext,
     private val rolesRepo: RolesRepo,
 ) : ShiftsRepo {
-    override fun fetchAllShifts(): List<ShiftDto> {
+    override fun fetchAllShifts(from: OffsetDateTime): List<ShiftDto> {
         return dslContext
             .selectFrom(userShowShiftJoin)
+            .where(SHOW.FROM.greaterOrEqual(from))
             .fetch { it.toShiftRecord() }
     }
 
@@ -34,9 +36,10 @@ class ShiftsRepoImpl(
         )
     }
 
-    override fun fetchShiftsByUserId(id: Long): List<ShiftDto> {
+    override fun fetchShiftsByUserId(id: Long, from: OffsetDateTime): List<ShiftDto> {
         return dslContext.selectFrom(userShowShiftJoin)
             .where(SHIFT.USER_ID.eq(id))
+            .and(SHOW.FROM.greaterOrEqual(from))
             .fetch { it.toShiftRecord() }
     }
 

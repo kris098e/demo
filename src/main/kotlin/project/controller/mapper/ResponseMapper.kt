@@ -40,11 +40,13 @@ fun ShowRecord.toShowResponseDto(): ShowsResponseDto {
 
 fun ShiftDto.toShiftsResponseDto(): ShiftsResponseDto {
     val shiftDto = this
+    val user = if(shiftDto.user?.id != null)
+        shiftDto.user.toUserResponseDto(roles = shiftDto.userRoles) else null
     return ShiftsResponseDto(
         uuid = shiftDto.uuid,
         role = shiftDto.shiftRole,
         show = shiftDto.show.toShowResponseDto(),
-        user = shiftDto.user?.toUserResponseDto(roles = shiftDto.userRoles)
+        user = user
     )
 }
 

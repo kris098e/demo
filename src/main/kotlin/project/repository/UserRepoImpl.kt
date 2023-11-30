@@ -9,11 +9,17 @@ import org.jooq.impl.DSL
 @Singleton
 class UserRepoImpl(
     private val dslContext: DSLContext,
+    private val rolesRepo: RolesRepo,
 ) : UserRepo {
-    override fun getUser(username: String): UserRecord? {
-        return dslContext.selectFrom(USER)
+    override fun getUser(username: String): Pair<UserRecord, List<String>>? {
+        val user = dslContext.selectFrom(USER)
             .where(USER.USERNAME.eq(username))
             .fetchOne()
+
+        return user?.let {
+            val roles = rolesRepo.getRoles(it.id)
+            it to roles
+        }
     }
 
     override fun insertUser(userRecord: UserRecord): UserRecord {
@@ -24,5 +30,9 @@ class UserRepoImpl(
                 .returning()
                 .fetchOne()!!
         }
+    }
+
+    override fun getAllUsers(): List<UserRecord> {
+        return dslContext.selectFrom(USER).fetch()
     }
 }

@@ -15,6 +15,12 @@
             <column name="to" type="timestamp with time zone">
                 <constraints nullable="false"/>
             </column>
+            <column name="uuid" type="VARCHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="title" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
 
     </changeSet>

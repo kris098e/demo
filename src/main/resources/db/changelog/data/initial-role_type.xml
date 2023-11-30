@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="initialRoles-1" author="kristian.abrahamsen">
+        <sql>
+            INSERT INTO role_type (type, id) VALUES ('Technical', 1);
+            INSERT INTO role_type (type, id) VALUES ('Cleaning', 2);
+            INSERT INTO role_type (type, id) VALUES ('Sales', 3);
+            INSERT INTO role_type (type, id) VALUES ('Facility Service', 4);
+            INSERT INTO role_type (type, id) VALUES ('PR', 5);
+        </sql>
+    </changeSet>
+</databaseChangeLog>

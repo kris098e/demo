@@ -20,7 +20,7 @@ pushd "src/main/resources/"
 
 liquibase update \
   --changelog-file "db/liquibase-changelog.xml"  \
-  --url "jdbc:postgresql://localhost:5432/software" \
+  --url "jdbc:postgresql://localhost:5436/software" \
   --username "postgres" \
   --password "postgres"
 

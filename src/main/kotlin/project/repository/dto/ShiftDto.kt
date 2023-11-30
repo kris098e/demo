@@ -8,6 +8,6 @@ data class ShiftDto(
     val userRoles: List<String>,
     val shiftRole: String,
 
-    val user: UserRecord,
+    val user: UserRecord?,
     val show: ShowRecord,
 )

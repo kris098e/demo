@@ -7,5 +7,5 @@ data class ShiftsResponseDto(
     val uuid: String,
     val role: String,
     val show: ShowsResponseDto,
-    val user: UserResponseDto,
+    val user: UserResponseDto?,
 )

@@ -12,4 +12,15 @@ class ShowsRepoImpl(
     override fun fetchAllShows(): List<ShowRecord> {
         return dslContext.selectFrom(SHOW).fetch()
     }
+
+    override fun createShow(showRecord: ShowRecord): ShowRecord {
+        return dslContext.transactionResult { config ->
+            val context = config.dsl()
+
+            return@transactionResult context.insertInto(SHOW)
+                .set(showRecord)
+                .returning()
+                .fetchOne()!!
+        }
+    }
 }

@@ -31,4 +31,8 @@ class UserRepoImpl(
                 .fetchOne()!!
         }
     }
+
+    override fun getAllUsers(): List<UserRecord> {
+        return dslContext.selectFrom(USER).fetch()
+    }
 }

@@ -15,6 +15,7 @@ plugins {
     id("nu.studer.jooq") version "8.2"
     id("jacoco")
     id("jacoco-report-aggregation")
+    id("com.faire.gradle.analyze") version "1.0.9"
 }
 
 version = "0.1"
@@ -24,6 +25,7 @@ val kotlinVersion=project.properties.get("kotlinVersion")
 repositories {
     mavenCentral()
 }
+apply(plugin = "com.faire.gradle.analyze")
 
 dependencies {
     kapt("io.micronaut:micronaut-http-validation")
@@ -154,7 +156,6 @@ jacoco {
     toolVersion = "0.8.9"
 }
 
-
 tasks.check {
     dependsOn(tasks.named<JacocoReport>("testCodeCoverageReport"))
 }
@@ -165,12 +166,12 @@ tasks.jacocoTestReport {
         csv.apply { isEnabled = false }
         html.apply { isEnabled = true }
     }
-    afterEvaluate {
-        classDirectories.setFrom(files(classDirectories.files.map {
-            fileTree(it).apply { exclude("**/generated-src/**",) }
-        }))
-    }
 }
+
+val excludes = listOf(
+    "**/generated/**",
+    "**/generated-src/**"
+)
 
 tasks.test {
     testLogging {
@@ -185,4 +186,9 @@ tasks.test {
             override fun afterSuite(suite: TestDescriptor, result: TestResult) {}
         })
     }
+
+    configure<JacocoTaskExtension> {
+        this.excludes = excludes
+    }
 }
+

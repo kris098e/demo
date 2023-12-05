@@ -12,3 +12,4 @@ class Shift:
     start: str
     end: str
     role: str
+    taken: bool

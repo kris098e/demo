@@ -9,13 +9,24 @@
                 <th>Start tid</th>
                 <th>Slut tid</th>
                 <th>Rolle</th>
+                <th>Tilgængelig</th>
             </tr>
             {% for shift in show.shifts %}
-                <tr>
-                    <th>{{shift.start}}</th>
-                    <th>{{shift.end}}</th>
-                    <th>{{shift.role}}</th>
-                </tr>
+                {% if shift.taken %}
+                    <tr>
+                        <th class="text-muted">{{shift.start}}</th>
+                        <th class="text-muted">{{shift.end}}</th>
+                        <th class="text-muted">{{shift.role}}</th>
+                        <th class="text-muted">Vagt taget</th>
+                    </tr>
+                {% else %}
+                    <tr onclick="window.location='/shifts?uuid={{shift.shiftid}}'">
+                        <th>{{shift.start}}</th>
+                        <th>{{shift.end}}</th>
+                        <th>{{shift.role}}</th>
+                        <th>Vagt Tilgængelig</th>
+                    </tr>
+                {% endif %}
             {% endfor %}
         </table>
         <br>

@@ -43,7 +43,8 @@ def homepage():
                 shift['show']['uuid'],
                 utils.parse_isoformat(shift['show']['from']),
                 utils.parse_isoformat(shift['show']['to']),
-                shift['role']
+                shift['role'],
+                'user' in shift
             )
         )
     
@@ -77,6 +78,22 @@ def login_request():
         error = 'Invalid Credentials'
         return render_template('login.html', error=error, user='', admin=False)
 
+@app.route('/shift', methods=['GET'])
+def take_shift():
+    uuid = request.args['uuid']
+    token = session['jwt']
+    r = requests.patch(
+        url=f'{BASE_URL}/shifts/{uuid}',
+        headers={
+            'Accept': 'application/json',
+            'Authorization': f'{token}'
+        }
+    )
+    if r.status_code >= 300:
+        print(r.text)
+    
+    return redirect(url_for('homepage'))
+
 
 if __name__ == '__main__':
-    app.run('127.0.0.1', 4000)
+    app.run('127.0.0.1', 4000, debug=True)

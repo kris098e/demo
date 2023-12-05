@@ -1,4 +1,4 @@
-# To run with docker database
+# Setup database with docker-compose
 ```bash
 docker-compose -f docker-compose.yml up
 ```

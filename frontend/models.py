@@ -9,6 +9,7 @@ class Show:
 class Shift:
     shiftid: str
     showid: str
+    date: str
     start: str
     end: str
     role: str

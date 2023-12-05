@@ -1,9 +1,9 @@
-# Setup database with docker-compose
+# To run application
+
+## Setup database with docker-compose
 ```bash
 docker-compose -f docker-compose.yml up
 ```
-
-# To run application
 ## Setup database
 ```bash
 brew install liquibase
@@ -22,6 +22,11 @@ popd
 ## generate jooq
 ```bash
 ./gradlew generateJooq
+```
+
+## run application
+```bash
+./gradlew run
 ```
 
 # Generate test coverage report

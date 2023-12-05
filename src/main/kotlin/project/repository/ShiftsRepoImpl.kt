@@ -45,14 +45,13 @@ class ShiftsRepoImpl(
             .fetch { it.toShiftRecord() }
     }
 
-    override fun updateShift(shiftUuid: UUID, userId: Long, roleId: Long,): ShiftDto? {
+    override fun updateShift(shiftUuid: UUID, userId: Long,): ShiftDto? {
         return dslContext.transactionResult { conf ->
             val context = DSL.using(conf)
 
             context.update(SHIFT)
                 .set(SHIFT.USER_ID, userId)
                 .where(SHIFT.UUID.eq(shiftUuid.toString()))
-                .and(SHIFT.ROLE_TYPE_ID.eq(roleId))
                 .returning()
                 .fetchOne()
                 ?.toShiftRecord()

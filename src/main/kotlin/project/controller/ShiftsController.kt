@@ -41,17 +41,15 @@ class ShiftsController(
         ).map { it.toShiftsResponseDto() }
     }
 
-    @Patch("/{uuid}/{role}")
+    @Patch("/{uuid}")
     fun updateShift(
         @Header("Authorization") token: String,
         @PathVariable uuid: String,
-        @PathVariable role: String,
     ): ShiftsResponseDto {
         val user = securityService.verifyAuthentication(token)
         return shiftsRepo.updateShift(
             shiftUuid = UUID.fromString(uuid),
             userId = user.id,
-            roleId = rolesRepo.getRoleId(role = role) ?: throw NotFoundException("Role not found"),
         )?.toShiftsResponseDto() ?: throw NotFoundException("Shift not found")
     }
 }

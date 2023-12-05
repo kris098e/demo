@@ -78,7 +78,7 @@ def login_request():
         error = 'Invalid Credentials'
         return render_template('login.html', error=error, user='', admin=False)
 
-@app.route('/shift', methods=['GET'])
+@app.route('/shifts', methods=['GET'])
 def take_shift():
     uuid = request.args['uuid']
     token = session['jwt']

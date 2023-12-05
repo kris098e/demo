@@ -15,6 +15,7 @@ plugins {
     id("nu.studer.jooq") version "8.2"
     id("jacoco")
     id("jacoco-report-aggregation")
+    id("com.faire.gradle.analyze") version "1.0.9"
 }
 
 version = "0.1"
@@ -24,6 +25,7 @@ val kotlinVersion=project.properties.get("kotlinVersion")
 repositories {
     mavenCentral()
 }
+apply(plugin = "com.faire.gradle.analyze")
 
 dependencies {
     kapt("io.micronaut:micronaut-http-validation")
@@ -40,7 +42,6 @@ dependencies {
     implementation("io.swagger.core.v3:swagger-annotations")
     implementation("jakarta.annotation:jakarta.annotation-api")
     implementation("jakarta.validation:jakarta.validation-api")
-    implementation("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}")
     compileOnly("io.micronaut:micronaut-http-client")
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -48,10 +49,7 @@ dependencies {
     runtimeOnly("org.slf4j:slf4j-simple")
     runtimeOnly("org.yaml:snakeyaml")
     testImplementation("io.micronaut:micronaut-http-client")
-    testImplementation("org.assertj:assertj-core")
-    testImplementation("org.testcontainers:junit-jupiter")
     testImplementation("org.testcontainers:postgresql")
-    testImplementation("org.testcontainers:testcontainers")
     jooqGenerator("org.postgresql:postgresql:42.5.1")
     implementation("io.micronaut.sql:micronaut-jooq")
     annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
@@ -61,9 +59,8 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testImplementation("io.micronaut.test:micronaut-test-junit5")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
-    testImplementation("org.junit.jupiter:junit-jupiter-engine")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.7.0")
     testAnnotationProcessor("io.micronaut:micronaut-inject-java")
-    testImplementation("io.micronaut.test:micronaut-test-spock")
 
     implementation("io.jsonwebtoken:jjwt:0.9.1")
 }
@@ -154,7 +151,6 @@ jacoco {
     toolVersion = "0.8.9"
 }
 
-
 tasks.check {
     dependsOn(tasks.named<JacocoReport>("testCodeCoverageReport"))
 }
@@ -165,12 +161,12 @@ tasks.jacocoTestReport {
         csv.apply { isEnabled = false }
         html.apply { isEnabled = true }
     }
-    afterEvaluate {
-        classDirectories.setFrom(files(classDirectories.files.map {
-            fileTree(it).apply { exclude("**/generated-src/**",) }
-        }))
-    }
 }
+
+val excludes = listOf(
+    "**/generated/**",
+    "**/generated-src/**"
+)
 
 tasks.test {
     testLogging {
@@ -185,4 +181,9 @@ tasks.test {
             override fun afterSuite(suite: TestDescriptor, result: TestResult) {}
         })
     }
+
+    configure<JacocoTaskExtension> {
+        this.excludes = excludes
+    }
 }
+

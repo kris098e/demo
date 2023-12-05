@@ -37,12 +37,15 @@ def homepage():
     shows = {shift['show']['uuid']: Show(shift['show']['title'], []) for shift in response}
 
     for shift in response:
+        start = utils.parse_isoformat(shift['show']['from'])
+        end = utils.parse_isoformat(shift['show']['to'])
         shows[shift['show']['uuid']].shifts.append(
             Shift(
                 shift['uuid'],
                 shift['show']['uuid'],
-                utils.parse_isoformat(shift['show']['from']),
-                utils.parse_isoformat(shift['show']['to']),
+                str(start.strftime('%d/%m/%y')),
+                str(start.strftime('%H:%M')),
+                str(end.strftime('%H:%M')),
                 shift['role'],
                 'user' in shift
             )

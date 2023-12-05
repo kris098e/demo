@@ -6,14 +6,16 @@
         <h2>{{show.name}}</h2>
         <table class="table table-striped table-hover table-bordered">
             <tr>
-                <th>Start tid</th>
-                <th>Slut tid</th>
+                <th>Dato</th>
+                <th>Start</th>
+                <th>Slut</th>
                 <th>Rolle</th>
                 <th>Tilgængelig</th>
             </tr>
             {% for shift in show.shifts %}
                 {% if shift.taken %}
                     <tr>
+                        <th class="text-muted">{{shift.date}}</th>
                         <th class="text-muted">{{shift.start}}</th>
                         <th class="text-muted">{{shift.end}}</th>
                         <th class="text-muted">{{shift.role}}</th>
@@ -21,6 +23,7 @@
                     </tr>
                 {% else %}
                     <tr onclick="window.location='/shifts?uuid={{shift.shiftid}}'">
+                        <th>{{shift.date}}</th>
                         <th>{{shift.start}}</th>
                         <th>{{shift.end}}</th>
                         <th>{{shift.role}}</th>

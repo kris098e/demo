@@ -21,8 +21,9 @@ data class CreateUserDto(
 
 @Serdeable
 enum class Role(val roleName: String) {
-    CLEANING("Cleaning"),
     TECHNICAL("Technical"),
+    CLEANING("Cleaning"),
     SALES("Sales"),
-    MAINTENANCE("Maintenance")
+    FACILITY_SERVICE("Facility Service"),
+    PR("PR"),
 }

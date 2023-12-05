@@ -29,7 +29,7 @@ class ShiftsController(
         ).map { it.toShiftsResponseDto() }
     }
 
-    @Get("/{from}")
+    @Get("/")
     fun getShiftsByUserId(
         @Header("Authorization") token: String,
         @QueryValue @Nullable from: OffsetDateTime? = null,

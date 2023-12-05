@@ -1,5 +1,6 @@
 package project.controller
 
+import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
@@ -28,14 +29,16 @@ class ShowsController(
         return showsRepo.fetchAllShows().map { it.toShowResponseDto() }
     }
 
-    @Post("/create")
+    @Post("/create",)
     fun createShow(
         @Header("Authorization") token: String,
         @Body createShowDto: CreateShowDto,
-    ): ShowsResponseDto {
+    ): HttpResponse<ShowsResponseDto> {
         securityService.verifyAuthentication(token)
-        return showsRepo.createShow(
+        val show = showsRepo.createShow(
             createShowDto.toShowRecord(uuidGenerator.generateUuid())
         ).toShowResponseDto()
+
+        return HttpResponse.created(show)
     }
 }

@@ -187,3 +187,7 @@ tasks.test {
     }
 }
 
+allOpen {
+    annotation("jakarta.inject.Singleton")
+    annotation("io.micronaut.context.annotation.Bean")
+}

@@ -14,11 +14,10 @@ import java.util.UUID
 @Controller("/api/shifts")
 class ShiftsController(
     private val shiftsRepo: ShiftsRepo,
-    private val rolesRepo: RolesRepo,
     private val securityService: SecurityService
 ) {
 
-    @Get("/all/{from}")
+    @Get("/all")
     fun getAllShifts(
         @Header("Authorization") token: String,
         @QueryValue @Nullable from: OffsetDateTime? = null,

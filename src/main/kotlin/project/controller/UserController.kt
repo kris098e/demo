@@ -1,5 +1,6 @@
 package project.controller
 
+import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.*
 import io.micronaut.validation.Validated
 import jakarta.validation.Valid
@@ -30,7 +31,7 @@ class UserController (
     fun createUser(
         @Valid @Body createUserDto: CreateUserDto,
         @Header("Authorization") token: String,
-    ): CreaseUserResponseDto {
+    ): HttpResponse<CreaseUserResponseDto> {
         val user = securityService.verifyAuthentication(token)
         if (!user.isSuper) {
             throw UnauthorizedRequestException("Only super users can create users")
@@ -46,7 +47,9 @@ class UserController (
             password = storedUser.password,
         )
 
-        return userRecord.toUserResponseDto(roles = roles, jwt = jwt)
+        return HttpResponse.created(
+            storedUser.toUserResponseDto(roles = roles, jwt = jwt)
+        )
     }
 
     @Post("/login")

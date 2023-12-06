@@ -1,3 +1,9 @@
+# Pre-requisites
+- java 17
+- docker
+- docker-compose
+- liquibase
+
 # To run application
 
 ## Setup database with docker-compose

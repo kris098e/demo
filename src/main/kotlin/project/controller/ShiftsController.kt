@@ -7,6 +7,7 @@ import project.controller.mapper.toShiftsResponseDto
 import project.repository.RolesRepo
 import project.repository.ShiftsRepo
 import project.security.SecurityService
+import project.utils.exception.exceptions.BadRequestException
 import project.utils.exception.exceptions.NotFoundException
 import java.time.OffsetDateTime
 import java.util.UUID
@@ -47,8 +48,15 @@ class ShiftsController(
     ): ShiftsResponseDto {
         val user = securityService.verifyAuthentication(token)
         return shiftsRepo.updateShift(
-            shiftUuid = UUID.fromString(uuid),
+            shiftUuid = uuid.getUuid(),
             userId = user.id,
         )?.toShiftsResponseDto() ?: throw NotFoundException("Shift not found")
     }
 }
+
+fun String.getUuid(): UUID =
+    try {
+        UUID.fromString(this)
+    } catch (e: IllegalArgumentException) {
+        throw BadRequestException("Shift not found")
+    }

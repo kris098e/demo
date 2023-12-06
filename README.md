@@ -4,7 +4,7 @@
 - docker-compose
 - liquibase
 
-# To run application
+# To run backend application
 
 ## Setup database with docker-compose
 ```bash
@@ -39,3 +39,21 @@ popd
 ```bash
 ./gradlew testCodeCoverageReport
 ```
+
+# To run frontend application
+```bash
+pushd "frontend"
+
+pip3 install requests
+pip3 install flask
+
+python3 main.py
+
+popd
+```
+
+Now go to `http://localhost:4000`, and try logging in with
+
+username: chairman
+password: chair
+

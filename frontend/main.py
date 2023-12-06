@@ -21,7 +21,7 @@ def homepage():
     today = quote_plus(str(dt.datetime.now(dt.timezone.utc).astimezone().isoformat()))
     token = session['jwt']
     r = requests.get(
-        url=f'{BASE_URL}/shifts/all/{today}',
+        url=f'{BASE_URL}/shifts/all?from={today}',
         headers={
             'Accept': 'application/json',
             'Authorization': f'{token}'

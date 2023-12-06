@@ -54,6 +54,6 @@ popd
 
 Now go to `http://localhost:4000`, and try logging in with
 
-username: chairman
-password: chair
+- username: chairman
+- password: chair
 
